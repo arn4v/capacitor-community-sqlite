@@ -357,6 +357,10 @@ public class Database {
     public void close() throws Exception {
         if (_db.isOpen()) {
             try {
+                if (_db.inTransaction()) {
+                    Log.v(TAG, "Rolling back active transaction before closing database");
+                    rollbackTransaction();
+                }
                 _db.close();
                 _isOpen = false;
                 return;

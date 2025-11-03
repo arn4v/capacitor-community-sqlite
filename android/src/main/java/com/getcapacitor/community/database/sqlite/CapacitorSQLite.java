@@ -430,15 +430,10 @@ public class CapacitorSQLite {
         Database db = dbDict.get(connName);
         if (db != null) {
             if (db.isOpen()) {
-                if (!db.inTransaction()) {
-                    try {
-                        db.close();
-                    } catch (Exception e) {
-                        throw new Exception(e.getMessage());
-                    }
-                } else {
-                    String msg = "database " + dbName + " failed to close still in transaction";
-                    throw new Exception(msg);
+                try {
+                    db.close();
+                } catch (Exception e) {
+                    throw new Exception(e.getMessage());
                 }
             } else {
                 String msg = "database " + dbName + " not opened";
